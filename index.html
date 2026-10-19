@@ -414,6 +414,33 @@
         font-size: 14px;
     }
 }
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.comparison-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.insight-box {
+  background-color: #f4f6f8;
+  padding: 16px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+}
     </style>
 </head>
 
@@ -478,7 +505,55 @@
         <p>Market information is provided by NGN Market API.</p>
         <p>Market prices can change. Always verify information before investing.</p>
     </footer>
+    <!-- DIVE Comparison Container -->
+<div id="comparisonContainer" style="display: none; margin-top: 30px;">
+  <h2>DIVE Comparison</h2>
+  
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th id="company1Name">BUA Foods</th>
+        <th id="company2Name">Nestlé Nigeria</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Share Price</td>
+        <td id="c1Price">₦0</td>
+        <td id="c2Price">₦0</td>
+      </tr>
+      <tr>
+        <td>Market Cap</td>
+        <td id="c1Cap">₦0</td>
+        <td id="c2Cap">₦0</td>
+      </tr>
+      <tr>
+        <td>52W High</td>
+        <td id="c1High">₦0</td>
+        <td id="c2High">₦0</td>
+      </tr>
+      <tr>
+        <td>52W Low</td>
+        <td id="c1Low">₦0</td>
+        <td id="c2Low">₦0</td>
+      </tr>
+      <tr>
+        <td>Volume</td>
+        <td id="c1Vol">0</td>
+        <td id="c2Vol">0</td>
+      </tr>
+    </tbody>
+  </table>
 
+  <!-- DIVE Insight Section -->
+  <div class="insight-box" style="margin-top: 20px;">
+    <h3>DIVE Insight</h3>
+    <p id="diveInsightText">
+      Comparing metrics between selected companies...
+    </p>
+  </div>
+</div>
     <script>
         const companyInput = document.getElementById("companyInput");
         const companyResult = document.getElementById("companyResult");
@@ -679,6 +754,34 @@
         buaBtn.addEventListener("click", function () {
             searchCompany("BUAFOODS");
         });
+        function renderComparison(companyA, companyB) {
+  // Update Header Names
+  document.getElementById("company1Name").innerText = companyA.name;
+  document.getElementById("company2Name").innerText = companyB.name;
+
+  // Update Data Rows
+  document.getElementById("c1Price").innerText = "₦" + companyA.sharePrice;
+  document.getElementById("c2Price").innerText = "₦" + companyB.sharePrice;
+
+  document.getElementById("c1Cap").innerText = companyA.marketCap;
+  document.getElementById("c2Cap").innerText = companyB.marketCap;
+
+  document.getElementById("c1High").innerText = "₦" + companyA.high52;
+  document.getElementById("c2High").innerText = "₦" + companyB.high52;
+
+  document.getElementById("c1Low").innerText = "₦" + companyA.low52;
+  document.getElementById("c2Low").innerText = "₦" + companyB.low52;
+
+  document.getElementById("c1Vol").innerText = companyA.volume;
+  document.getElementById("c2Vol").innerText = companyB.volume;
+
+    // Generate Automated DIVE Insight
+    const insight = `${companyA.name} has a market cap of ${companyA.marketCap} compared to ${companyB.name}'s ${companyB.marketCap}.`;
+    document.getElementById("diveInsightText").innerText = insight;
+
+  // Make Table Visible
+  document.getElementById("comparisonContainer").style.display = "block";
+}
     </script>
 
 </body>
