@@ -453,7 +453,77 @@
             <a href="#">Home</a>
             <a href="#companies">Companies</a>
             <a href="#research">Research</a>
-            <a href="#comparisonContainer" id="navCompare">Compare</a>
+   
+         <!-- DIVE Comparison Container -->
+<div id="comparisonContainer" style="display: none; margin-top: 30px; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+  <h2>DIVE Comparison</h2>
+  <p>Select or type two companies to compare live metrics side-by-side.</p>
+  
+  <!-- Interactive Selector Form -->
+  <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+    <div>
+      <label for="companyASelect" style="font-weight: 600; display: block; margin-bottom: 5px;">First Company:</label>
+      <input type="text" id="companyASelect" placeholder="e.g. MTNN or BUAFOODS" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
+    </div>
+    
+    <div style="font-weight: bold; align-self: flex-end; padding-bottom: 10px;">VS</div>
+    
+    <div>
+      <label for="companyBSelect" style="font-weight: 600; display: block; margin-bottom: 5px;">Second Company:</label>
+      <input type="text" id="companyBSelect" placeholder="e.g. NESTLE or GUINNESS" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
+    </div>
+    
+    <button id="runComparisonBtn" style="align-self: flex-end; padding: 9px 18px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">
+      Compare Live Data
+    </button>
+  </div>
+
+  <!-- Dynamic Comparison Table -->
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th id="company1Name">Select Company 1</th>
+        <th id="company2Name">Select Company 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Share Price</td>
+        <td id="c1Price">-</td>
+        <td id="c2Price">-</td>
+      </tr>
+      <tr>
+        <td>Market Cap</td>
+        <td id="c1Cap">-</td>
+        <td id="c2Cap">-</td>
+      </tr>
+      <tr>
+        <td>52W High</td>
+        <td id="c1High">-</td>
+        <td id="c2High">-</td>
+      </tr>
+      <tr>
+        <td>52W Low</td>
+        <td id="c1Low">-</td>
+        <td id="c2Low">-</td>
+      </tr>
+      <tr>
+        <td>Volume</td>
+        <td id="c1Vol">-</td>
+        <td id="c2Vol">-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DIVE Insight Section -->
+  <div class="insight-box" style="margin-top: 20px;">
+    <h3>DIVE Insight</h3>
+    <p id="diveInsightText">
+      Enter two ticker symbols above and click "Compare Live Data" to generate live insights.
+    </p>
+  </div>
+</div>
         </div>
     </nav>
 
@@ -788,6 +858,59 @@ document.getElementById("navCompare").addEventListener("click", function(e) {
   const compBox = document.getElementById("comparisonContainer");
   compBox.style.display = "block";
   compBox.scrollIntoView({ behavior: "smooth" });
+});
+document.getElementById("runComparisonBtn").addEventListener("click", async function () {
+  const symbolA = document.getElementById("companyASelect").value.trim().toUpperCase();
+  const symbolB = document.getElementById("companyBSelect").value.trim().toUpperCase();
+
+  if (!symbolA || !symbolB) {
+    alert("Please enter two company tickers (e.g. MTNN and BUAFOODS)");
+    return;
+  }
+
+  document.getElementById("diveInsightText").innerText = "Fetching real live market data from Render backend...";
+
+  try {
+    // Fetch real data for Company A and Company B concurrently from your backend
+    const [resA, resB] = await Promise.all([
+    fetch(`https://dive-backend.onrender.com/api/company/${symbolA}`).then(r => r.json()),
+    fetch(`https://dive-backend.onrender.com/api/company/${symbolB}`).then(r => r.json())
+    ]);
+
+    if (resA.success && resB.success) {
+      const dataA = resA.data;
+      const dataB = resB.data;
+
+      // Update Header Names
+      document.getElementById("company1Name").innerText = dataA.name || symbolA;
+      document.getElementById("company2Name").innerText = dataB.name || symbolB;
+
+      // Update Data Rows dynamically from real live API payload
+      document.getElementById("c1Price").innerText = "₦" + (dataA.sharePrice || "N/A");
+      document.getElementById("c2Price").innerText = "₦" + (dataB.sharePrice || "N/A");
+
+      document.getElementById("c1Cap").innerText = dataA.marketCap || "N/A";
+      document.getElementById("c2Cap").innerText = dataB.marketCap || "N/A";
+
+      document.getElementById("c1High").innerText = "₦" + (dataA.high52 || "N/A");
+      document.getElementById("c2High").innerText = "₦" + (dataB.high52 || "N/A");
+
+      document.getElementById("c1Low").innerText = "₦" + (dataA.low52 || "N/A");
+      document.getElementById("c2Low").innerText = "₦" + (dataB.low52 || "N/A");
+
+      document.getElementById("c1Vol").innerText = dataA.volume || "N/A";
+      document.getElementById("c2Vol").innerText = dataB.volume || "N/A";
+
+      // Automated Dynamic DIVE Insight
+      document.getElementById("diveInsightText").innerText = 
+                `${dataA.name || symbolA} shows a share price of ₦${dataA.sharePrice || 'N/A'} with Market Cap ${dataA.marketCap || 'N/A'}, while ${dataB.name || symbolB} trades at ₦${dataB.sharePrice || 'N/A'} with Market Cap ${dataB.marketCap || 'N/A'}.`;
+    } else {
+      document.getElementById("diveInsightText").innerText = "Could not fetch data for one or both companies. Check ticker symbols.";
+    }
+  } catch (err) {
+    console.error("Comparison fetch error:", err);
+    document.getElementById("diveInsightText").innerText = "Error connecting to backend server. Please try again.";
+  }
 });
     </script>
 
