@@ -453,6 +453,7 @@
             <a href="#">Home</a>
             <a href="#companies">Companies</a>
             <a href="#research">Research</a>
+            <a href="#comparisonContainer" id="navCompare">Compare</a>
         </div>
     </nav>
 
@@ -782,6 +783,12 @@
   // Make Table Visible
   document.getElementById("comparisonContainer").style.display = "block";
 }
+document.getElementById("navCompare").addEventListener("click", function(e) {
+  e.preventDefault();
+  const compBox = document.getElementById("comparisonContainer");
+  compBox.style.display = "block";
+  compBox.scrollIntoView({ behavior: "smooth" });
+});
     </script>
 
 </body>
