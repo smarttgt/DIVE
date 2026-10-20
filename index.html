@@ -865,29 +865,35 @@ document.getElementById("runComparisonBtn").addEventListener("click", async func
   const symbolB = document.getElementById("companyBSelect").value.trim().toUpperCase();
 
   if (!symbolA || !symbolB) {
-    alert("Please enter two company tickers (e.g. MTNN and BUAFOODS)");
+    alert("Please enter two company tickers (e.g. Dangote or NESTLE)");
     return;
   }
 
-  document.getElementById("diveInsightText").innerText = "Fetching market data...";
+  document.getElementById("diveInsightText").innerText = "Fetching real market data...";
 
   async function fetchCompanyData(symbol) {
     try {
+      // 1. Try fetching from Render backend first
       const res = await fetch(`https://dive-backend.onrender.com/api/company/${symbol}`);
-      if (!res.ok) throw new Error("API Route not available");
-      const json = await res.json();
-      return json.data || json;
+      if (res.ok) {
+        const json = await res.json();
+        return json.data || json;
+      }
     } catch (e) {
-      console.warn(`Backend fetch failed for ${symbol}, using client fallback.`, e);
-      return {
-        name: symbol,
-        sharePrice: symbol === 'MTNN' ? '245.00' : '760.60',
-        marketCap: symbol === 'MTNN' ? '5.1T' : '13.6T',
-        high52: symbol === 'MTNN' ? '290.00' : '967.00',
-        low52: symbol === 'MTNN' ? '190.00' : '650.00',
-        volume: '45,000'
-      };
+      console.warn(`Render backend fetch failed for ${symbol}`, e);
     }
+
+    try {
+      // 2. Direct fallback to live public market data so real numbers load dynamically
+      const resFallback = await fetch(`https://raw.githubusercontent.com/ngnmarket/ngx-data/main/data/${symbol}.json`);
+      if (resFallback.ok) {
+        return await resFallback.json();
+      }
+    } catch (e) {
+      console.warn(`Fallback fetch failed for ${symbol}`, e);
+    }
+
+    return null;
   }
 
   const [dataA, dataB] = await Promise.all([
@@ -895,33 +901,59 @@ document.getElementById("runComparisonBtn").addEventListener("click", async func
     fetchCompanyData(symbolB)
   ]);
 
-  // Update Header Names
-  document.getElementById("company1Name").innerText = dataA.name || symbolA;
-  document.getElementById("company2Name").innerText = dataB.name || symbolB;
+  if (!dataA && !dataB) {
+    document.getElementById("diveInsightText").innerText = "Could not find live data for the selected companies. Please check ticker symbols.";
+    return;
+  }
 
-  // Update Data Rows dynamically
-  document.getElementById("c1Price").innerText = "₦" + (dataA.sharePrice || "N/A");
-  document.getElementById("c2Price").innerText = "₦" + (dataB.sharePrice || "N/A");
+  // Set Dynamic Names
+  const nameA = (dataA && (dataA.name || dataA.companyName)) || symbolA;
+  const nameB = (dataB && (dataB.name || dataB.companyName)) || symbolB;
 
-  document.getElementById("c1Cap").innerText = dataA.marketCap || "N/A";
-  document.getElementById("c2Cap").innerText = dataB.marketCap || "N/A";
+  document.getElementById("company1Name").innerText = nameA;
+  document.getElementById("company2Name").innerText = nameB;
 
-  document.getElementById("c1High").innerText = "₦" + (dataA.high52 || "N/A");
-  document.getElementById("c2High").innerText = "₦" + (dataB.high52 || "N/A");
+  // Extract Live Prices & Metrics
+  const priceA = dataA ? (dataA.sharePrice || dataA.price || dataA.close || "N/A") : "N/A";
+  const priceB = dataB ? (dataB.sharePrice || dataB.price || dataB.close || "N/A") : "N/A";
 
-  document.getElementById("c1Low").innerText = "₦" + (dataA.low52 || "N/A");
-  document.getElementById("c2Low").innerText = "₦" + (dataB.low52 || "N/A");
+  const capA = dataA ? (dataA.marketCap || dataA.cap || "N/A") : "N/A";
+  const capB = dataB ? (dataB.marketCap || dataB.cap || "N/A") : "N/A";
 
-  document.getElementById("c1Vol").innerText = dataA.volume || "N/A";
-  document.getElementById("c2Vol").innerText = dataB.volume || "N/A";
+  const highA = dataA ? (dataA.high52 || dataA.week52High || "N/A") : "N/A";
+  const highB = dataB ? (dataB.high52 || dataB.week52High || "N/A") : "N/A";
 
-  // Automated Dynamic DIVE Insight
+  const lowA = dataA ? (dataA.low52 || dataA.week52Low || "N/A") : "N/A";
+  const lowB = dataB ? (dataB.low52 || dataB.week52Low || "N/A") : "N/A";
+
+  const volA = dataA ? (dataA.volume || "N/A") : "N/A";
+  const volB = dataB ? (dataB.volume || "N/A") : "N/A";
+
+  // Update Table Cells
+  document.getElementById("c1Price").innerText = priceA !== "N/A" ? "₦" + priceA : "N/A";
+  document.getElementById("c2Price").innerText = priceB !== "N/A" ? "₦" + priceB : "N/A";
+
+  document.getElementById("c1Cap").innerText = capA;
+  document.getElementById("c2Cap").innerText = capB;
+
+  document.getElementById("c1High").innerText = highA !== "N/A" ? "₦" + highA : "N/A";
+  document.getElementById("c2High").innerText = highB !== "N/A" ? "₦" + highB : "N/A";
+
+  document.getElementById("c1Low").innerText = lowA !== "N/A" ? "₦" + lowA : "N/A";
+  document.getElementById("c2Low").innerText = lowB !== "N/A" ? "₦" + lowB : "N/A";
+
+  document.getElementById("c1Vol").innerText = volA;
+  document.getElementById("c2Vol").innerText = volB;
+
+  // Update Dynamic Insight
   document.getElementById("diveInsightText").innerText = 
-    `${dataA.name || symbolA} shows a share price of ₦${dataA.sharePrice || 'N/A'} with Market Cap ${dataA.marketCap || 'N/A'}, while ${dataB.name || symbolB} trades at ₦${dataB.sharePrice || 'N/A'} with Market Cap ${dataB.marketCap || 'N/A'}.`;
+    `${nameA} is currently trading at ₦${priceA} with a Market Cap of ${capA}, while ${nameB} trades at ₦${priceB} with a Market Cap of ${capB}.`;
 });
+
+// Safe Navigation Link Handler
 const compareLink = document.getElementById("navCompare");
 if (compareLink) {
-  compareLink.addEventListener("click", function(e) {
+  compareLink.addEventListener("click", function (e) {
     e.preventDefault();
     const compBox = document.getElementById("comparisonContainer");
     if (compBox) {
