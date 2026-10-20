@@ -449,11 +449,12 @@
     <nav>
         <div class="logo">DIVE</div>
 
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#companies">Companies</a>
-            <a href="#research">Research</a>
-   
+       <div class="nav-links">
+  <a href="#">Home</a>
+  <a href="#companies">Companies</a>
+  <a href="#research">Research</a>
+  <a href="#comparisonContainer" id="navCompare">Compare</a>
+</div>
          <!-- DIVE Comparison Container -->
 <div id="comparisonContainer" style="display: none; margin-top: 30px; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
   <h2>DIVE Comparison</h2>
@@ -912,6 +913,17 @@ document.getElementById("runComparisonBtn").addEventListener("click", async func
     document.getElementById("diveInsightText").innerText = "Error connecting to backend server. Please try again.";
   }
 });
+const compareLink = document.getElementById("navCompare");
+if (compareLink) {
+  compareLink.addEventListener("click", function(e) {
+    e.preventDefault();
+    const compBox = document.getElementById("comparisonContainer");
+    if (compBox) {
+      compBox.style.display = "block";
+      compBox.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+}
     </script>
 
 </body>
