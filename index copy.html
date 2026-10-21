@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C13DNJ6BT5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C13DNJ6BT5');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="qZh0-KR6pqagnI8YvBGdswfmuWFIuFODqzn_bljti8g" />
+
+    <title>DIVE | Company Research</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e6f0ff;
+            color: #222222;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 25px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background-color: #111827;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        header {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        section {
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        #companies,
+        #research {
+            text-align: center;
+        }
+
+        .company-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .company-card {
+            background-color: white;
+            padding: 22px;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px (0, 0, 0, 0.12);
+            text-align: left;
+            margin: 12px auto;
+            overflow-wrap: anywhere;
+        }
+
+        .company-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        .company-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .company-heading h3 {
+            margin-bottom: 5px;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        input {
+            padding: 14px;
+            width: 100%;
+            max-width: 350px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 6px 3px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #companyResult {
+            margin-top: 30px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            border: 2px solid #007bff;
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
+
+        #companyResult h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        #companyResult p {
+            font-size: 16px;
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .metric {
+            background-color: #f3f6fa;
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 0;
+        }.metric strong {
+            display: block;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .metric span {
+            display: block;
+            font-size: 17px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .source-note {
+            font-size: 13px !important;
+            color: #555;
+            margin-top: 22px !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 10px;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            nav {
+                padding: 15px;
+            }
+
+            .nav-links a {
+                margin-left: 8px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            #companyResult {
+                padding: 15px;
+            }
+        }
+        /* DIVE company results layout fix */
+
+#companyResult {
+    width: 100%;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+#companyResult .company-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 22px;
+    box-sizing: border-box;
+}
+
+#companyResult .company-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* COMPANY RESEARCH RESULT BOX */
+#companyResult {
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 24px;
+    box-sizing: border-box;
+    background: white;
+    border: 2px solid #007bff;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    text-align: left;
+}
+
+/* COMPANY CARD */
+#companyResult .company-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+}
+
+/* COMPANY NAME, LOGO AND DETAILS */
+#companyResult .company-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#companyResult .company-logo {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+#companyResult .company-heading h3 {
+    margin: 0 0 8px;
+    color: #007bff;
+    font-size: 23px;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .company-heading p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* TWO-COLUMN FINANCIAL INFORMATION */
+#companyResult .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+}
+
+#companyResult .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 85px;
+    padding: 14px;
+    margin: 0;
+    box-sizing: border-box;
+    background: #f3f8fc;
+    border: 1px solid #d5e5f2;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .metric strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+#companyResult .metric span {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .metric {
+    min-width: 0;
+    padding: 14px;
+    box-sizing: border-box;
+    background: #f3f6fa;
+    border: 1px solid #e1e8f0;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .metric strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #555555;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#companyResult .metric span {
+    display: block;
+    color: #111827;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* LAST UPDATED */
+#companyResult .company-card > p {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* SMALL SCREENS */
+@media (max-width: 550px) {
+    #companyResult {
+        padding: 12px;
+    }
+
+    #companyResult .company-card {
+        padding: 8px;
+    }
+
+    #companyResult .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    #companyResult .metric {
+        padding: 10px;
+    }
+
+    #companyResult .metric span {
+        font-size: 14px;
+    }
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.comparison-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.insight-box {
+  background-color: #f4f6f8;
+  padding: 16px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+}
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">DIVE</div>
+
+       <div class="nav-links">
+  <a href="#">Home</a>
+  <a href="#companies">Companies</a>
+  <a href="#research">Research</a>
+  <a href="#comparisonContainer" id="navCompare">Compare</a>
+</div>
+         <!-- DIVE Comparison Container -->
+<div id="comparisonContainer" style="display: none; margin-top: 30px; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+  <h2>DIVE Comparison</h2>
+  <p>Select or type two companies to compare live metrics side-by-side.</p>
+  
+  <!-- Interactive Selector Form -->
+  <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+    <div>
+      <label for="companyASelect" style="font-weight: 600; display: block; margin-bottom: 5px;">First Company:</label>
+      <input type="text" id="companyASelect" placeholder="e.g. MTNN or BUAFOODS" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
+    </div>
+    
+    <div style="font-weight: bold; align-self: flex-end; padding-bottom: 10px;">VS</div>
+    
+    <div>
+      <label for="companyBSelect" style="font-weight: 600; display: block; margin-bottom: 5px;">Second Company:</label>
+      <input type="text" id="companyBSelect" placeholder="e.g. NESTLE or GUINNESS" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
+    </div>
+    
+    <button id="runComparisonBtn" style="align-self: flex-end; padding: 9px 18px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">
+      Compare Live Data
+    </button>
+  </div>
+
+  <!-- Dynamic Comparison Table -->
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th id="company1Name">Select Company 1</th>
+        <th id="company2Name">Select Company 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Share Price</td>
+        <td id="c1Price">-</td>
+        <td id="c2Price">-</td>
+      </tr>
+      <tr>
+        <td>Market Cap</td>
+        <td id="c1Cap">-</td>
+        <td id="c2Cap">-</td>
+      </tr>
+      <tr>
+        <td>52W High</td>
+        <td id="c1High">-</td>
+        <td id="c2High">-</td>
+      </tr>
+      <tr>
+        <td>52W Low</td>
+        <td id="c1Low">-</td>
+        <td id="c2Low">-</td>
+      </tr>
+      <tr>
+        <td>Volume</td>
+        <td id="c1Vol">-</td>
+        <td id="c2Vol">-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DIVE Insight Section -->
+  <div class="insight-box" style="margin-top: 20px;">
+    <h3>DIVE Insight</h3>
+    <p id="diveInsightText">
+      Enter two ticker symbols above and click "Compare Live Data" to generate live insights.
+    </p>
+  </div>
+</div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Welcome to DIVE</h1>
+        <p>Discover companies. Understand businesses. Make informed decisions.</p>
+    </header>
+
+    <section id="companies">
+        <h2>Companies</h2>
+        <p>Search and research listed companies on DIVE.</p>
+
+        <div class="company-list">
+
+            <div class="company-card">
+                <h3>MTN Nigeria</h3>
+                <p><strong>Ticker:</strong> MTNN</p>
+                <p>Telecommunications</p>
+                <button type="button" id="mtnBtn">View Company</button>
+            </div>
+
+            <div class="company-card">
+                <h3>BUA Foods</h3>
+                <p><strong>Ticker:</strong> BUAFOODS</p>
+                <p>Food Manufacturing</p>
+                <button type="button" id="buaBtn">View Company</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="research">
+        <h2>Research a Company</h2>
+
+        <input
+            type="text"
+            id="companyInput"
+            placeholder="Enter company name or ticker..."
+        >
+
+        <button type="button" id="searchBtn">Search</button>
+
+        <div id="companyResult" aria-live="polite">
+            <p>Search for a company to see its available information.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>DIVE — Company Research</p>
+        <p>Market information is provided by NGN Market API.</p>
+        <p>Market prices can change. Always verify information before investing.</p>
+    </footer>
+    
+    <script>
+        const companyInput = document.getElementById("companyInput");
+        const companyResult = document.getElementById("companyResult");
+        const searchBtn = document.getElementById("searchBtn");
+        const mtnBtn = document.getElementById("mtnBtn");
+        const buaBtn = document.getElementById("buaBtn");
+
+        async function searchCompany(companyName) {
+            const search = companyName.trim();
+
+            if (!search) {
+                companyResult.innerHTML =
+                    "<p>Please enter a company name or ticker.</p>";
+                return;
+            }
+
+            companyInput.value = search;
+
+            companyResult.innerHTML =
+                "<p>Searching for company information...</p>";
+
+            try {
+               const response = await fetch(
+    "https://dive-backend-4l7e.onrender.com/companies?search=" +
+    encodeURIComponent(search)
+);
+
+                const result = await response.json();
+
+                console.log("HTTP status:", response.status);
+                console.log("API result:", result);if (!response.ok || !result.success) {
+                    throw new Error(
+                        result.error || "Unable to retrieve company data."
+                    );
+                }
+
+                const companies = result.data?.data;
+
+                if (!companies || companies.length === 0) {
+                    companyResult.innerHTML =
+                        "<p>No matching company found. Try another name or ticker.</p>";
+                    return;
+                }
+
+                companyResult.innerHTML =
+                    "<h2>Company Search Results</h2>" +
+                    companies.map(function (company) {
+                        function money(value) {
+                            if (value == null || value === "") {
+                                return "Not available";
+                            }
+
+                            return "₦" + Number(value).toLocaleString(
+                                "en-NG",
+                                { maximumFractionDigits: 2 }
+                            );
+                        }
+
+                        function number(value) {
+                            if (value == null || value === "") {
+                                return "Not available";
+                            }
+
+                            return Number(value).toLocaleString("en-NG");
+                        }
+
+                        function percent(value) {
+                            if (value == null || value === "") {
+                                return "Not available";
+                            }
+
+                            return Number(value).toFixed(2) + "%";
+                        }
+
+                        const updated = company.last_updated
+                            ? new Date(company.last_updated).toLocaleString()
+                            : "Not available";
+
+                        return `
+                            <div class="company-card">
+
+                                <div class="company-heading">
+                                    ${
+                                        company.logo_url
+                                            ? `<img src="${company.logo_url}" alt="" class="company-logo">`
+                                            : ""
+                                    }
+
+                                    <div>
+                                        <h3>${company.name || "Unknown company"}</h3>
+                                        <p>
+                                            <strong>Ticker:</strong>
+                                            ${company.symbol || "Not available"}
+                                        </p>
+                                        <p>
+                                            <strong>Sector:</strong>
+                                            ${company.sector || "Not available"}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="metrics">
+
+                                    <div class="metric">
+                                        <strong>Share Price</strong>
+                                        <span>${money(company.price)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Previous Close</strong>
+                                        <span>${money(company.prev_close)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Daily Change</strong>
+                                        <span>${money(company.price_change)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Daily Change %</strong>
+                                        <span>${percent(company.price_change_percent)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Trading Volume</strong>
+                                        <span>${number(company.volume)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Market Capitalisation</strong>
+                                        <span>${money(company.market_cap)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Shares Outstanding</strong>
+                                        <span>${number(company.shares_outstanding)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>52-Week High</strong>
+                                        <span>${money(company.high_52wk)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>52-Week Low</strong>
+                                        <span>${money(company.low_52wk)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>7-Day Change</strong>
+                                        <span>${percent(company.change_7d_percent)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>52-Week Change</strong>
+                                        <span>${percent(company.change_52w_percent)}</span>
+                                    </div>
+
+                                </div>
+
+                                <p><strong>Last Updated:</strong> ${updated}</p>
+
+                            </div>
+                        `;
+                    }).join("") +
+                    "<p class='source-note'>Source: NGN Market API. " +
+                    "Values and update times are supplied by the data provider.</p>";
+
+                companyResult.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            } catch (error) {
+                console.error("DIVE company search error:", error);
+
+                companyResult.innerHTML =
+                    "<h2>Unable to load company data</h2>" +
+                    "<p>" + error.message + "</p>" +
+                    "<p>Make sure your DIVE backend is running.</p>";
+            }
+        }
+
+        searchBtn.addEventListener("click", function () {
+            searchCompany(companyInput.value);
+        });
+
+        companyInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                searchCompany(companyInput.value);
+            }
+        });
+
+        mtnBtn.addEventListener("click", function () {
+            searchCompany("MTNN");
+        });
+
+        buaBtn.addEventListener("click", function () {
+            searchCompany("BUAFOODS");
+        });
+        function renderComparison(companyA, companyB) {
+  // Update Header Names
+  document.getElementById("company1Name").innerText = companyA.name;
+  document.getElementById("company2Name").innerText = companyB.name;
+
+  // Update Data Rows
+  document.getElementById("c1Price").innerText = "₦" + companyA.sharePrice;
+  document.getElementById("c2Price").innerText = "₦" + companyB.sharePrice;
+
+  document.getElementById("c1Cap").innerText = companyA.marketCap;
+  document.getElementById("c2Cap").innerText = companyB.marketCap;
+
+  document.getElementById("c1High").innerText = "₦" + companyA.high52;
+  document.getElementById("c2High").innerText = "₦" + companyB.high52;
+
+  document.getElementById("c1Low").innerText = "₦" + companyA.low52;
+  document.getElementById("c2Low").innerText = "₦" + companyB.low52;
+
+  document.getElementById("c1Vol").innerText = companyA.volume;
+  document.getElementById("c2Vol").innerText = companyB.volume;
+
+    // Generate Automated DIVE Insight
+    const insight = `${companyA.name} has a market cap of ${companyA.marketCap} compared to ${companyB.name}'s ${companyB.marketCap}.`;
+    document.getElementById("diveInsightText").innerText = insight;
+
+  // Make Table Visible
+  document.getElementById("comparisonContainer").style.display = "block";
+}
+document.getElementById("navCompare").addEventListener("click", function(e) {
+  e.preventDefault();
+  const compBox = document.getElementById("comparisonContainer");
+  compBox.style.display = "block";
+  compBox.scrollIntoView({ behavior: "smooth" });
+});
+// --- LIVE NIGERIAN MARKET DATA DATABASE ---
+// --- SAFE NAVIGATION CLICK HANDLER ---
+const compareLink = document.getElementById("navCompare");
+if (compareLink) {
+  compareLink.addEventListener("click", function (e) {
+    e.preventDefault();
+    const compBox = document.getElementById("comparisonContainer");
+    if (compBox) {
+    compBox.style.display = "block";
+      compBox.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+}
+    </script>
+
+</body>
+</html>
