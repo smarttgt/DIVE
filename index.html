@@ -853,14 +853,16 @@ const company = list.find(item =>
 if (!company) {
     throw new Error("Company not found: " + ticker);
 }
-
 return {
     name: company.name ?? company.companyName ?? ticker,
     sharePrice: company.price ?? company.sharePrice ?? "-",
     marketCap: company.market_cap ?? company.marketCap ?? "-",
     high52: company.high_52wk ?? company.high52 ?? "-",
     low52: company.low_52wk ?? company.low52 ?? "-",
-    volume: company.volume ?? "-"
+    volume: company.volume ?? "-",
+    dailyChangePercent: company.price_change_percent ?? 0,
+    weekChangePercent: company.change_7d_percent ?? 0,
+    yearChangePercent: company.change_52w_percent ?? 0
 };
             }
 
