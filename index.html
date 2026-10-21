@@ -831,17 +831,18 @@ if (compareButton) {
                     throw new Error("Could not load " + ticker);
                 }
 
-                const result = await response.json();
-                const list = Array.isArray(result)
-    ? result
-    : Array.isArray(result.companies)
-        ? result.companies
-        : Array.isArray(result.data)
-            ? result.data
-            : Array.isArray(result.results)
+               const result = await response.json();
+
+const list = Array.isArray(result?.data?.data)
+    ? result.data.data
+    : Array.isArray(result?.data)
+        ? result.data
+        : Array.isArray(result?.companies)
+            ? result.companies
+            : Array.isArray(result?.results)
                 ? result.results
-                : result && typeof result === "object"
-                    ? [result]
+                : Array.isArray(result)
+                    ? result
                     : [];
 
 const company = list.find(item =>
@@ -855,11 +856,11 @@ if (!company) {
 
 return {
     name: company.name ?? company.companyName ?? ticker,
-    sharePrice: company.sharePrice ?? company.price ?? company.close ?? "-",
-    marketCap: company.marketCap ?? company.market_cap ?? "-",
-    high52: company.high52 ?? company.high_52_week ?? "-",
-    low52: company.low52 ?? company.low_52_week ?? "-",
-    volume: company.volume ?? company.traded_volume ?? "-"
+    sharePrice: company.price ?? company.sharePrice ?? "-",
+    marketCap: company.market_cap ?? company.marketCap ?? "-",
+    high52: company.high_52wk ?? company.high52 ?? "-",
+    low52: company.low_52wk ?? company.low52 ?? "-",
+    volume: company.volume ?? "-"
 };
             }
 
