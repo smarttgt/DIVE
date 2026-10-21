@@ -833,26 +833,34 @@ if (compareButton) {
 
                 const result = await response.json();
                 const list = Array.isArray(result)
-                    ? result
-                    : result.companies ?? result.data ?? result.results ?? [result];
+    ? result
+    : Array.isArray(result.companies)
+        ? result.companies
+        : Array.isArray(result.data)
+            ? result.data
+            : Array.isArray(result.results)
+                ? result.results
+                : result && typeof result === "object"
+                    ? [result]
+                    : [];
 
-                const company = list.find(item =>
-                    String(item.symbol ?? item.ticker ?? item.code ?? "")
-                        .toUpperCase() === ticker.toUpperCase()
-                ) ?? (list.length === 1 ? list[0] : null);
+const company = list.find(item =>
+    String(item.symbol ?? item.ticker ?? item.code ?? "")
+        .toUpperCase() === ticker.toUpperCase()
+) || (list.length === 1 ? list[0] : null);
 
-                if (!company) {
-                    throw new Error("Company not found: " + ticker);
-                }
+if (!company) {
+    throw new Error("Company not found: " + ticker);
+}
 
-                return {
-                    name: company.name ?? company.companyName ?? ticker,
-                    sharePrice: company.sharePrice ?? company.price ?? company.close ?? "-",
-                    marketCap: company.marketCap ?? company.market_cap ?? "-",
-                    high52: company.high52 ?? company.high_52_week ?? "-",
-                    low52: company.low52 ?? company.low_52_week ?? "-",
-                    volume: company.volume ?? company.traded_volume ?? "-"
-                };
+return {
+    name: company.name ?? company.companyName ?? ticker,
+    sharePrice: company.sharePrice ?? company.price ?? company.close ?? "-",
+    marketCap: company.marketCap ?? company.market_cap ?? "-",
+    high52: company.high52 ?? company.high_52_week ?? "-",
+    low52: company.low52 ?? company.low_52_week ?? "-",
+    volume: company.volume ?? company.traded_volume ?? "-"
+};
             }
 
             const [companyA, companyB] = await Promise.all([
