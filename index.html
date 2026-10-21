@@ -92,7 +92,7 @@
             width: 100%;
             max-width: 300px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 5px 20px (0, 0, 0, 0.12);
             text-align: left;
             margin: 12px auto;
             overflow-wrap: anywhere;
@@ -577,55 +577,7 @@
         <p>Market information is provided by NGN Market API.</p>
         <p>Market prices can change. Always verify information before investing.</p>
     </footer>
-    <!-- DIVE Comparison Container -->
-<div id="comparisonContainer" style="display: none; margin-top: 30px;">
-  <h2>DIVE Comparison</h2>
-  
-  <table class="comparison-table">
-    <thead>
-      <tr>
-        <th>Metric</th>
-        <th id="company1Name">BUA Foods</th>
-        <th id="company2Name">Nestlé Nigeria</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Share Price</td>
-        <td id="c1Price">₦0</td>
-        <td id="c2Price">₦0</td>
-      </tr>
-      <tr>
-        <td>Market Cap</td>
-        <td id="c1Cap">₦0</td>
-        <td id="c2Cap">₦0</td>
-      </tr>
-      <tr>
-        <td>52W High</td>
-        <td id="c1High">₦0</td>
-        <td id="c2High">₦0</td>
-      </tr>
-      <tr>
-        <td>52W Low</td>
-        <td id="c1Low">₦0</td>
-        <td id="c2Low">₦0</td>
-      </tr>
-      <tr>
-        <td>Volume</td>
-        <td id="c1Vol">0</td>
-        <td id="c2Vol">0</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- DIVE Insight Section -->
-  <div class="insight-box" style="margin-top: 20px;">
-    <h3>DIVE Insight</h3>
-    <p id="diveInsightText">
-      Comparing metrics between selected companies...
-    </p>
-  </div>
-</div>
+    
     <script>
         const companyInput = document.getElementById("companyInput");
         const companyResult = document.getElementById("companyResult");
@@ -648,10 +600,10 @@
                 "<p>Searching for company information...</p>";
 
             try {
-                const response = await fetch(
-                   "https://dive-backend-4l7e.onrender.com/companies?search=" +
-                    encodeURIComponent(search)
-                );
+               const response = await fetch(
+    "https://dive-backend-4l7e.onrender.com/companies?search=" +
+    encodeURIComponent(search)
+);
 
                 const result = await response.json();
 
@@ -861,55 +813,6 @@ document.getElementById("navCompare").addEventListener("click", function(e) {
   compBox.scrollIntoView({ behavior: "smooth" });
 });
 // --- LIVE NIGERIAN MARKET DATA DATABASE ---
-const NIGERIAN_MARKET_DATA = {
-  "MTNN": { name: "MTN Nigeria Communications PLC", price: "245.00", cap: "5.10T", high: "290.00", low: "190.00", volume: "12,450,000" },
-  "BUAFOODS": { name: "BUA Foods PLC", price: "360.00", cap: "6.48T", high: "410.00", low: "220.00", volume: "2,100,000" },
-  "GTCO": { name: "Guaranty Trust Holding Co. PLC", price: "48.50", cap: "1.42T", high: "56.00", low: "28.10", volume: "45,120,000" },
-  "ZENITHBANK": { name: "Zenith Bank PLC", price: "38.20", cap: "1.20T", high: "45.00", low: "24.00", volume: "32,400,000" },
-  "DANGCEM": { name: "Dangote Cement PLC", price: "700.00", cap: "11.94T", high: "800.00", low: "450.00", volume: "540,000" },
-  "NESTLE": { name: "Nestle Nigeria PLC", price: "760.60", cap: "1.28T", high: "967.00", low: "650.00", volume: "12,800" },
-  "AIRTELAFRI": { name: "Airtel Africa PLC", price: "2,200.00", cap: "8.27T", high: "2,400.00", low: "1,500.00", volume: "850,000" }
-};
-
-// --- COMPARE BUTTON EVENT LISTENER ---
-document.getElementById("runComparisonBtn").addEventListener("click", function () {
-  const inputA = document.getElementById("companyASelect").value.trim().toUpperCase();
-  const inputB = document.getElementById("companyBSelect").value.trim().toUpperCase();
-
-  if (!inputA || !inputB) {
-    alert("Please enter two company tickers (e.g. MTNN and GTCO)");
-    return;
-  }
-
-  // Look up data in local market database
-  const companyA = NIGERIAN_MARKET_DATA[inputA] || { name: inputA, price: "N/A", cap: "N/A", high: "N/A", low: "N/A", volume: "N/A" };
-  const companyB = NIGERIAN_MARKET_DATA[inputB] || { name: inputB, price: "N/A", cap: "N/A", high: "N/A", low: "N/A", volume: "N/A" };
-
-  // 1. Update Header Titles
-  document.getElementById("company1Name").innerText = companyA.name;
-  document.getElementById("company2Name").innerText = companyB.name;
-
-  // 2. Populate Comparison Table
-  document.getElementById("c1Price").innerText = companyA.price !== "N/A" ? "₦" + companyA.price : "N/A";
-  document.getElementById("c2Price").innerText = companyB.price !== "N/A" ? "₦" + companyB.price : "N/A";
-
-  document.getElementById("c1Cap").innerText = companyA.cap;
-  document.getElementById("c2Cap").innerText = companyB.cap;
-
-  document.getElementById("c1High").innerText = companyA.high !== "N/A" ? "₦" + companyA.high : "N/A";
-  document.getElementById("c2High").innerText = companyB.high !== "N/A" ? "₦" + companyB.high : "N/A";
-
-  document.getElementById("c1Low").innerText = companyA.low !== "N/A" ? "₦" + companyA.low : "N/A";
-  document.getElementById("c2Low").innerText = companyB.low !== "N/A" ? "₦" + companyB.low : "N/A";
-
-  document.getElementById("c1Vol").innerText = companyA.volume;
-  document.getElementById("c2Vol").innerText = companyB.volume;
-
-  // 3. Generate DIVE Insight Analysis
-    const insightText = `${companyA.name} is currently trading at ₦${companyA.price} with a Market Cap of ${companyA.cap}, while ${companyB.name} trades at ₦${companyB.price} with a Market Cap of ${companyB.cap}.`;
-  document.getElementById("diveInsightText").innerText = insightText;
-});
-
 // --- SAFE NAVIGATION CLICK HANDLER ---
 const compareLink = document.getElementById("navCompare");
 if (compareLink) {
@@ -917,7 +820,7 @@ if (compareLink) {
     e.preventDefault();
     const compBox = document.getElementById("comparisonContainer");
     if (compBox) {
-      compBox.style.display = "block";
+    compBox.style.display = "block";
       compBox.scrollIntoView({ behavior: "smooth" });
     }
   });
