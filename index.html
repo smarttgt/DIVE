@@ -797,10 +797,42 @@ function renderComparison(companyA, companyB) {
     document.getElementById("c1Vol").innerText = companyA.volume ?? "-";
     document.getElementById("c2Vol").innerText = companyB.volume ?? "-";
 
-    document.getElementById("diveInsightText").innerText =
-        companyA.name + " market cap: " + (companyA.marketCap ?? "Unavailable") +
-        ". " + companyB.name + " market cap: " +
-        (companyB.marketCap ?? "Unavailable") + ".";
+   const dailyA = Number(companyA.dailyChangePercent);
+const dailyB = Number(companyB.dailyChangePercent);
+
+const weekA = Number(companyA.weekChangePercent);
+const weekB = Number(companyB.weekChangePercent);
+
+const yearA = Number(companyA.yearChangePercent);
+const yearB = Number(companyB.yearChangePercent);
+
+let insight = "";
+
+if (dailyA > dailyB) {
+    insight += companyA.name + " performed better today. ";
+} else if (dailyB > dailyA) {
+    insight += companyB.name + " performed better today. ";
+} else {
+    insight += "Both companies have the same daily percentage change. ";
+}
+
+if (weekA > weekB) {
+    insight += companyA.name + " has stronger 7-day momentum. ";
+} else if (weekB > weekA) {
+    insight += companyB.name + " has stronger 7-day momentum. ";
+} else {
+    insight += "Both companies have the same 7-day percentage change. ";
+}
+
+if (yearA > yearB) {
+    insight += companyA.name + " has performed better over 52 weeks.";
+} else if (yearB > yearA) {
+    insight += companyB.name + " has performed better over 52 weeks.";
+} else {
+    insight += "Both companies have the same 52-week percentage change.";
+}
+
+document.getElementById("diveInsightText").innerText = insight;
 
     document.getElementById("comparisonContainer").style.display = "block";
 }
