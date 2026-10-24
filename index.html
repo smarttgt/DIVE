@@ -788,17 +788,21 @@
     const yearA = Number(companyA.yearChangePercent);
     const yearB = Number(companyB.yearChangePercent);
 
-    const priceA = Number(companyA.price);
-    const priceB = Number(companyB.price);
+    // Use the same field names returned by getCompany()
+    const priceA = Number(companyA.sharePrice);
+    const priceB = Number(companyB.sharePrice);
+
+    const marketCapA = Number(companyA.marketCap);
+    const marketCapB = Number(companyB.marketCap);
 
     const volumeA = Number(companyA.volume);
     const volumeB = Number(companyB.volume);
 
-    const highA = Number(companyA.high_52wk);
-    const highB = Number(companyB.high_52wk);
+    const highA = Number(companyA.high52);
+    const highB = Number(companyB.high52);
 
-    const lowA = Number(companyA.low_52wk);
-    const lowB = Number(companyB.low_52wk);
+    const lowA = Number(companyA.low52);
+    const lowB = Number(companyB.low52);
 
     const valid = value => Number.isFinite(value);
     const pct = value => `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
@@ -808,6 +812,33 @@
 
     const nameA = companyA.name || "Company A";
     const nameB = companyB.name || "Company B";
+    document.getElementById("company1Name").innerText = nameA;
+    document.getElementById("company2Name").innerText = nameB;
+
+    const displayNumber = value =>
+        Number.isFinite(value)
+            ? value.toLocaleString("en-NG", { maximumFractionDigits: 2 })
+            : "-";
+
+    const displayNaira = value =>
+        Number.isFinite(value)
+            ? "₦" + displayNumber(value)
+            : "-";
+
+    document.getElementById("c1Price").innerText = displayNaira(priceA);
+    document.getElementById("c2Price").innerText = displayNaira(priceB);
+
+    document.getElementById("c1Cap").innerText = displayNaira(marketCapA);
+    document.getElementById("c2Cap").innerText = displayNaira(marketCapB);
+
+    document.getElementById("c1High").innerText = displayNaira(highA);
+    document.getElementById("c2High").innerText = displayNaira(highB);
+
+    document.getElementById("c1Low").innerText = displayNaira(lowA);
+    document.getElementById("c2Low").innerText = displayNaira(lowB);
+
+    document.getElementById("c1Vol").innerText = displayNumber(volumeA);
+    document.getElementById("c2Vol").innerText = displayNumber(volumeB);
 
     let insight = "";
 
