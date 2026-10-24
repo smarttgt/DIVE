@@ -778,65 +778,93 @@
         buaBtn.addEventListener("click", function () {
             searchCompany("BUAFOODS");
         });
-function renderComparison(companyA, companyB) {
-    document.getElementById("company1Name").innerText = companyA.name;
-    document.getElementById("company2Name").innerText = companyB.name;
+        function renderComparison(companyA, companyB) {
+    const dailyA = Number(companyA.dailyChangePercent ?? companyA.price_change_percent);
+    const dailyB = Number(companyB.dailyChangePercent ?? companyB.price_change_percent);
 
-    document.getElementById("c1Price").innerText = "₦" + (companyA.sharePrice ?? "-");
-    document.getElementById("c2Price").innerText = "₦" + (companyB.sharePrice ?? "-");
+    const weekA = Number(companyA.weekChangePercent);
+    const weekB = Number(companyB.weekChangePercent);
 
-    document.getElementById("c1Cap").innerText = companyA.marketCap ?? "-";
-    document.getElementById("c2Cap").innerText = companyB.marketCap ?? "-";
+    const yearA = Number(companyA.yearChangePercent);
+    const yearB = Number(companyB.yearChangePercent);
 
-    document.getElementById("c1High").innerText = companyA.high52 ?? "-";
-    document.getElementById("c2High").innerText = companyB.high52 ?? "-";
+    const priceA = Number(companyA.price);
+    const priceB = Number(companyB.price);
 
-    document.getElementById("c1Low").innerText = companyA.low52 ?? "-";
-    document.getElementById("c2Low").innerText = companyB.low52 ?? "-";
+    const volumeA = Number(companyA.volume);
+    const volumeB = Number(companyB.volume);
 
-    document.getElementById("c1Vol").innerText = companyA.volume ?? "-";
-    document.getElementById("c2Vol").innerText = companyB.volume ?? "-";
+    const highA = Number(companyA.high_52wk);
+    const highB = Number(companyB.high_52wk);
 
-   const dailyA = Number(companyA.dailyChangePercent);
-const dailyB = Number(companyB.dailyChangePercent);
+    const lowA = Number(companyA.low_52wk);
+    const lowB = Number(companyB.low_52wk);
 
-const weekA = Number(companyA.weekChangePercent);
-const weekB = Number(companyB.weekChangePercent);
+    const valid = value => Number.isFinite(value);
+    const pct = value => `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
+    const naira = value => "₦" + value.toLocaleString("en-NG", {
+        maximumFractionDigits: 2
+    });
 
-const yearA = Number(companyA.yearChangePercent);
-const yearB = Number(companyB.yearChangePercent);
+    const nameA = companyA.name || "Company A";
+    const nameB = companyB.name || "Company B";
 
-let insight = "";
+    let insight = "";
 
-if (dailyA > dailyB) {
-    insight += companyA.name + " performed better today. ";
-} else if (dailyB > dailyA) {
-    insight += companyB.name + " performed better today. ";
-} else {
-    insight += "Both companies have the same daily percentage change. ";
-}
+    // Daily performance
+    if (valid(dailyA) && valid(dailyB)) {
+        if (dailyA > dailyB) {
+            insight += `DAILY PERFORMANCE: ${nameA} is performing better today, with a change of ${pct(dailyA)} compared with ${pct(dailyB)} for ${nameB}. `;
+        } else if (dailyB > dailyA) {
+            insight += `DAILY PERFORMANCE: ${nameB} is performing better today, with a change of ${pct(dailyB)} compared with ${pct(dailyA)} for ${nameA}. `;
+        } else {
+            insight += `DAILY PERFORMANCE: Both companies have the same daily percentage change of ${pct(dailyA)}. `;
+        }
+    }
 
-if (weekA > weekB) {
-    insight += companyA.name + " has stronger 7-day momentum. ";
-} else if (weekB > weekA) {
-    insight += companyB.name + " has stronger 7-day momentum. ";
-} else {
-    insight += "Both companies have the same 7-day percentage change. ";
-}
+    // Weekly performance
+    if (valid(weekA) && valid(weekB)) {
+        if (weekA > weekB) {
+            insight += `7-DAY PERFORMANCE: ${nameA} has performed better over the past 7 days (${pct(weekA)} versus ${pct(weekB)}). `;
+        } else if (weekB > weekA) {
+            insight += `7-DAY PERFORMANCE: ${nameB} has performed better over the past 7 days (${pct(weekB)} versus ${pct(weekA)}). `;
+        } else {
+            insight += `7-DAY PERFORMANCE: Both companies have the same 7-day change of ${pct(weekA)}. `;
+        }
+    }
 
-if (yearA > yearB) {
-    insight += companyA.name + " has performed better over 52 weeks.";
-} else if (yearB > yearA) {
-    insight += companyB.name + " has performed better over 52 weeks.";
-} else {
-    insight += "Both companies have the same 52-week percentage change.";
-}
+    // 52-week performance
+    if (valid(yearA) && valid(yearB)) {
+        if (yearA > yearB) {
+            insight += `52-WEEK PERFORMANCE: ${nameA} has delivered the stronger price performance over the past 52 weeks (${pct(yearA)} versus ${pct(yearB)}). `;
+        } else if (yearB > yearA) {
+            insight += `52-WEEK PERFORMANCE: ${nameB} has delivered the stronger price performance over the past 52 weeks (${pct(yearB)} versus ${pct(yearA)}). `;
+        } else {
+            insight += `52-WEEK PERFORMANCE: Both companies have the same 52-week change of ${pct(yearA)}. `;
+        }
+    }
 
+    // Share price comparison
+    if (valid(priceA) && valid(priceB)) {
+        insight += `SHARE PRICE: ${nameA} trades at ${naira(priceA)} per share, while ${nameB} trades at ${naira(priceB)}. A higher share price alone does not mean a company is performing better. `;
+    }
+
+    // Trading activity
+    if (valid(volumeA) && valid(volumeB)) {
+        insight += `TRADING ACTIVITY: ${nameA} recorded ${volumeA.toLocaleString("en-NG")} shares traded, while ${nameB} recorded ${volumeB.toLocaleString("en-NG")}. Trading volume measures shares traded, not the number of individual buyers. `;
+    }
+
+    // 52-week price range
+    if (valid(highA) && valid(lowA) && valid(highB) && valid(lowB)) {
+        insight += `52-WEEK PRICE RANGE: ${nameA} ranged from ${naira(lowA)} to ${naira(highA)}. ${nameB} ranged from ${naira(lowB)} to ${naira(highB)}. These are 52-WEEK ranges, not 52-day ranges. `;
+    }
+
+    if (!insight) {
+        insight = "DIVE needs valid daily, weekly, or 52-week percentage-change data to compare performance. Check whether the selected companies returned these figures.";
+    }
 document.getElementById("diveInsightText").innerText = insight;
-
     document.getElementById("comparisonContainer").style.display = "block";
 }
-
 const compareButton = document.getElementById("runComparisonBtn");
 
 if (compareButton) {
