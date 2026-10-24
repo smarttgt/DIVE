@@ -552,6 +552,26 @@
                 <p>Food Manufacturing</p>
                 <button type="button" id="buaBtn">View Company</button>
             </div>
+            <div class="see-all-companies">
+    <button type="button" id="seeAllCompaniesBtn">
+        See All Nigerian Stock Companies
+    </button>
+</div>
+<div id="allCompaniesSection" style="display: none; margin-top: 25px;">
+    <h2>All Nigerian Stock Companies</h2>
+    <p>Discover and search companies listed on the Nigerian stock market.</p>
+
+    <input
+        type="text"
+        id="companyDirectorySearch"
+        placeholder="Search company name or ticker..."
+        style="width: 100%; padding: 12px; margin-bottom: 15px;"
+    >
+
+    <p id="companyDirectoryStatus">Loading companies...</p>
+
+    <div id="companyDirectoryList"></div>
+</div>
 
         </div>
     </section>
@@ -980,6 +1000,113 @@ if (compareLink) {
         const compBox = document.getElementById("comparisonContainer");
         compBox.style.display = "block";
         compBox.scrollIntoView({ behavior: "smooth" });
+    });
+}
+// DIVE: ALL NIGERIAN STOCK COMPANIES
+
+const seeAllCompaniesBtn = document.getElementById("seeAllCompaniesBtn");
+const allCompaniesSection = document.getElementById("allCompaniesSection");
+const companyDirectorySearch = document.getElementById("companyDirectorySearch");
+const companyDirectoryStatus = document.getElementById("companyDirectoryStatus");
+const companyDirectoryList = document.getElementById("companyDirectoryList");
+
+let allListedCompanies = [];
+
+function renderCompanyDirectory(companies) {
+    companyDirectoryList.innerHTML = "";
+
+    if (companies.length === 0) {
+        companyDirectoryStatus.textContent = "No companies found. Try another search.";
+        return;
+    }
+
+    companyDirectoryStatus.textContent = "Showing " + companies.length + " companies";
+
+    companies.forEach(function(company) {
+        const card = document.createElement("div");
+        card.className = "company-card";
+
+        const name = document.createElement("h3");
+        name.textContent = company.name || "Company name unavailable";
+
+        const ticker = document.createElement("p");
+        ticker.textContent = "Ticker: " + (company.symbol || "-");
+
+        const sector = document.createElement("p");
+        sector.textContent = "Sector: " + (company.sector || "Not available");
+
+        const price = document.createElement("p");
+        price.textContent = "Share Price: " +
+            (company.price != null ? "₦" + Number(company.price).toLocaleString() : "Not available");
+
+        card.appendChild(name);
+        card.appendChild(ticker);
+        card.appendChild(sector);
+        card.appendChild(price);
+
+        companyDirectoryList.appendChild(card);
+    });
+}
+
+async function loadAllCompanies() {
+    companyDirectoryStatus.textContent = "Loading companies...";
+
+    try {
+        const response = await fetch(
+            "https://dive-backend-4l7e.onrender.com/all-companies"
+        );
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const result = await response.json();
+
+        const companies = result &&
+            result.data &&
+            Array.isArray(result.data.data)
+                ? result.data.data
+                : [];
+
+        allListedCompanies = companies;
+        renderCompanyDirectory(allListedCompanies);
+
+    } catch (error) {
+        companyDirectoryStatus.textContent =
+            "Unable to load companies. Please try again later.";
+        console.error("DIVE company directory error:", error);
+    }
+}
+
+if (seeAllCompaniesBtn) {
+    seeAllCompaniesBtn.addEventListener("click", function() {
+        const isHidden = allCompaniesSection.style.display === "none";
+
+        allCompaniesSection.style.display = isHidden ? "block" : "none";
+
+        if (isHidden && allListedCompanies.length === 0) {
+            loadAllCompanies();
+        }
+
+        if (isHidden) {
+            allCompaniesSection.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+}
+
+if (companyDirectorySearch) {
+    companyDirectorySearch.addEventListener("input", function() {
+        const searchTerm = companyDirectorySearch.value.toLowerCase().trim();
+
+        const filteredCompanies = allListedCompanies.filter(function(company) {
+            return (
+                String(company.name || "").toLowerCase().includes(searchTerm) ||
+                String(company.symbol || "").toLowerCase().includes(searchTerm) ||
+                String(company.sector || "").toLowerCase().includes(searchTerm)
+            );
+        });
+
+        renderCompanyDirectory(filteredCompanies);
     });
 }
     </script>
