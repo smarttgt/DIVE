@@ -29,6 +29,32 @@ const server = http.createServer(async (req, res) => {
             res.end(JSON.stringify(result));
             return;
         }
+        // GET ALL LISTED COMPANIES
+        if (url.pathname === "/all-companies") {
+            const apiUrl = new URL(
+                "https://api.ngnmarket.com/v1/companies"
+            );
+
+            apiUrl.searchParams.set("limit", "200");
+            apiUrl.searchParams.set("page", "1");
+            apiUrl.searchParams.set("sort", "market_cap");
+            apiUrl.searchParams.set("order", "desc");
+
+            const response = await fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${process.env.NGN_MARKET_API_KEY}`
+                }
+            });
+
+            const result = await response.json();
+
+            res.writeHead(response.status, {
+                "Content-Type": "application/json"
+            });
+
+            res.end(JSON.stringify(result));
+            return;
+        }
 
         // SEARCH FOR INDIVIDUAL COMPANIES
         if (url.pathname === "/companies") {
