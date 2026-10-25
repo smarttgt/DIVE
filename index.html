@@ -1034,16 +1034,52 @@ function renderCompanyDirectory(companies) {
 
         const sector = document.createElement("p");
         sector.textContent = "Sector: " + (company.sector || "Not available");
+        const selectButton = document.createElement("button");
+selectButton.type = "button";
+selectButton.textContent = "Research this company";
+
+selectButton.addEventListener("click", function() {
+    const companyA = document.getElementById("companyASelect");
+    const companyB = document.getElementById("companyBSelect");
+
+    if (!companyA || !companyB) {
+        alert("DIVE comparison fields could not be found.");
+        return;
+    }
+
+    if (!companyA.value.trim()) {
+        companyA.value = company.symbol;
+        companyA.focus();
+    } else if (!companyB.value.trim()) {
+        companyB.value = company.symbol;
+        companyB.focus();
+    } else {
+        const replaceFirst = confirm(
+            "Both fields are filled. Press OK to replace the first company, or Cancel to replace the second."
+        );
+
+        if (replaceFirst) {
+            companyA.value = company.symbol;
+            companyA.focus();
+        } else {
+            companyB.value = company.symbol;
+            companyB.focus();
+        }
+    }
+
+    document.getElementById("runComparisonBtn")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+});
 
         const price = document.createElement("p");
         price.textContent = "Share Price: " +
             (company.price != null ? "₦" + Number(company.price).toLocaleString() : "Not available");
 
         card.appendChild(name);
-        card.appendChild(ticker);
-        card.appendChild(sector);
-        card.appendChild(price);
-
+card.appendChild(ticker);
+card.appendChild(sector);
+card.appendChild(price);
+card.appendChild(selectButton);
         companyDirectoryList.appendChild(card);
     });
 }
