@@ -619,11 +619,12 @@
             companyResult.innerHTML =
                 "<p>Searching for company information...</p>";
 
+
             try {
-               const response = await fetch(
-    "https://dive-backend-4l7e.onrender.com/companies?search=" +
-    encodeURIComponent(search)
-);
+                const response = await fetch(
+                    "https://dive-backend-4l7e.onrender.com/companies?search=" +
+                    encodeURIComponent(search)
+                );
 
                 const result = await response.json();
 
