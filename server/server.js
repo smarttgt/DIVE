@@ -88,7 +88,42 @@ const server = http.createServer(async (req, res) => {
             res.end(JSON.stringify(result));
             return;
         }
+        // COMPANY FINANCIAL HISTORY
+        if (url.pathname === "/financial-history") {
+            const financialData = {
+                success: true,
+                company: "MTN Nigeria",
+                symbol: "MTNN",
+                currency: "NGN",
+                unit: "millions",
+                source: "MTN Nigeria audited annual financial statements",
+                years: [
+                    {
+                        year: 2023,
+                        revenue: 2468847,
+                        profitAfterTax: -137021
+                    },
+                    {
+                        year: 2024,
+                        revenue: 3358461,
+                        profitAfterTax: -400435
+                    },
+                    {
+                        year: 2025,
+                        revenue: 5202957,
+                        profitAfterTax: 1112846
+                    }
+                ]
+            };
 
+            res.writeHead(200, {
+                "Content-Type": "application/json"
+            });
+
+            res.end(JSON.stringify(financialData));
+            return;
+        }
+        
         // DEFAULT BACKEND MESSAGE
         res.writeHead(200);
         res.end(JSON.stringify({
