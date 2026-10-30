@@ -602,8 +602,7 @@
         const companyInput = document.getElementById("companyInput");
         const companyResult = document.getElementById("companyResult");
         const searchBtn = document.getElementById("searchBtn");
-        const mtnBtn = document.getElementById("mtnBtn");
-        const buaBtn = document.getElementById("buaBtn");
+
 
         async function searchCompany(companyName) {
             const search = companyName.trim();
@@ -645,7 +644,7 @@
 
                 companyResult.innerHTML =
                     "<h2>Company Search Results</h2>" +
-                    companies.map(function (company) {
+                    (await Promise.all(companies.map(async function (company) {
                         function money(value) {
                             if (value == null || value === "") {
                                 return "Not available";
@@ -760,10 +759,13 @@
                                 </div>
 
                                 <p><strong>Last Updated:</strong> ${updated}</p>
+${String(company.symbol || "").toUpperCase() === "MTNN"
+    ? await getMtnFinancialHistoryHtml()
+    : ""}
 
                             </div>
                         `;
-                    }).join("") +
+                    }))).join("") +
                     "<p class='source-note'>Source: NGN Market API. " +
                     "Values and update times are supplied by the data provider.</p>";
 
