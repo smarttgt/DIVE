@@ -618,17 +618,16 @@
             throw new Error("Invalid financial history data");
         }
 
-        const rows = data.years.map(function (item) {
-            return 
-                <tr>
-                    <td>${item.year}</td>
-                    <td>₦${Number(item.revenue).toLocaleString("en-NG")} million</td>
-                    <td>₦${Number(item.profitAfterTax).toLocaleString("en-NG")} million</td>
-                </tr>
-            ;
-        }).join("");
-
-        return 
+       const rows = data.years.map(function (item) {
+    return 
+        <tr>
+            <td>${item.year}</td>
+            <td>₦${Number(item.revenue).toLocaleString("en-NG")} million</td>
+            <td>₦${Number(item.profitAfterTax).toLocaleString("en-NG")} million</td>
+        </tr>
+    ;
+}).join("");
+        return `
             <div class="financial-history">
                 <h4>Annual Financial History</h4>
                 <p>MTN Nigeria — figures in ₦ millions.</p>
@@ -646,7 +645,7 @@
                     Source: MTN Nigeria audited annual financial statements.
                 </p>
             </div>
-        ;
+        `;
     } catch (error) {
         console.error("Financial history error:", error);
         return "<p>Annual financial history is temporarily unavailable.</p>";
