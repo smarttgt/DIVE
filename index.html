@@ -773,6 +773,14 @@ ${String(company.symbol || "").toUpperCase() === "MTNN"
                     behavior: "smooth",
                     block: "start"
                 });
+                const mtnCompany = companies.find(function (company) {
+    return String(company.symbol || "").toUpperCase() === "MTNN";
+});
+
+if (mtnCompany) {
+    const financialHtml = await getMtnFinancialHistoryHtml();
+    companyResult.insertAdjacentHTML("beforeend", financialHtml);
+}
 
             } catch (error) {
                 console.error("DIVE company search error:", error);
