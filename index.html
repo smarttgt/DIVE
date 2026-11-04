@@ -601,50 +601,8 @@
     <script>
         const companyInput = document.getElementById("companyInput");
         const companyResult = document.getElementById("companyResult");
-        const searchBtn = document.getElementById("searchBtn");
-
-                async function renderFinancialHistory(response) {
-                    try {
-        const data = await response.json();
-
-        if (!data.success || !Array.isArray(data.years)) {
-            throw new Error("Invalid financial history data");
-        }
-
-      const rows = data.years.map(function (item) {
-    return `
-        <tr>
-           <td>${item.year}</td>
-<td>₦${Number(item.revenue).toLocaleString("en-NG")} million</td>
-<td>₦${Number(item.profitAfterTax).toLocaleString("en-NG")} million</td>
-</tr>
-`;
-}).join("");
-        return `
-            <div class="financial-history">
-                <h4>Annual Financial History</h4>
-                <p>MTN Nigeria — figures in ₦ millions.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Year</th>
-                            <th>Revenue</th>
-                            <th>Profit / Loss After Tax</th>
-                        </tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-                <p class="source-note">
-                    Source: MTN Nigeria audited annual financial statements.
-                </p>
-            </div>
-        `;
-    } catch (error) {
-        console.error("Financial history error:", error);
-        return "<p>Annual financial history is temporarily unavailable.</p>";
-    }
-}
-                            
+        const searchBtn = document.getElementById("searchBtn")
+                
 
         async function searchCompany(companyName) {
             const search = companyName.trim();
