@@ -602,16 +602,9 @@
         const companyInput = document.getElementById("companyInput");
         const companyResult = document.getElementById("companyResult");
         const searchBtn = document.getElementById("searchBtn");
-        async function getMtnFinancialHistoryHtml() {
-    try {
-        const response = await fetch(
-            "https://dive-backend-4l7e.onrender.com/financial-history"
-        );
 
-        if (!response.ok) {
-            throw new Error("Financial history unavailable");
-        }
-
+                async function renderFinancialHistory(response) {
+                    try {
         const data = await response.json();
 
         if (!data.success || !Array.isArray(data.years)) {
@@ -619,13 +612,13 @@
         }
 
       const rows = data.years.map(function (item) {
-    return 
+    return `
         <tr>
-            <td>${item.year}</td>
-            <td>₦${Number(item.revenue).toLocaleString("en-NG")} million</td>
-            <td>₦${Number(item.profitAfterTax).toLocaleString("en-NG")} million</td>
-        </tr>
-    ;
+           <td>${item.year}</td>
+<td>₦${Number(item.revenue).toLocaleString("en-NG")} million</td>
+<td>₦${Number(item.profitAfterTax).toLocaleString("en-NG")} million</td>
+</tr>
+`;
 }).join("");
         return `
             <div class="financial-history">
@@ -819,15 +812,7 @@
                     behavior: "smooth",
                     block: "start"
                 });
-                const mtnCompany = companies.find(function (company) {
-    return String(company.symbol || "").toUpperCase() === "MTNN";
-});
-
-if (mtnCompany) {
-    const financialHtml = await getMtnFinancialHistoryHtml();
-    companyResult.insertAdjacentHTML("beforeend", financialHtml);
-}
-
+               
             } catch (error) {
                 console.error("DIVE company search error:", error);
 
