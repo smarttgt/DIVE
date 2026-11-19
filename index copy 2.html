@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C13DNJ6BT5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C13DNJ6BT5');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="qZh0-KR6pqagnI8YvBGdswfmuWFIuFODqzn_bljti8g" />
+
+    <title>DIVE | Company Research</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e6f0ff;
+            color: #222222;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 25px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background-color: #111827;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #60a5fa;
+        }
+
+        header {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        section {
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        #companies,
+        #research {
+            text-align: center;
+        }
+
+        .company-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .company-card {
+            background-color: white;
+            padding: 22px;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px (0, 0, 0, 0.12);
+            text-align: left;
+            margin: 12px auto;
+            overflow-wrap: anywhere;
+        }
+
+        .company-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        .company-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .company-heading h3 {
+            margin-bottom: 5px;
+        }
+
+        .company-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        input {
+            padding: 14px;
+            width: 100%;
+            max-width: 350px;
+            font-size: 16px;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 6px 3px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #companyResult {
+            margin-top: 30px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            border: 2px solid #007bff;
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
+
+        #companyResult h2 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        #companyResult p {
+            font-size: 16px;
+            margin: 12px 0;
+            line-height: 1.5;
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .metric {
+            background-color: #f3f6fa;
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 0;
+        }.metric strong {
+            display: block;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .metric span {
+            display: block;
+            font-size: 17px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .source-note {
+            font-size: 13px !important;
+            color: #555;
+            margin-top: 22px !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 10px;
+            color: #555;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+
+            nav {
+                padding: 15px;
+            }
+
+            .nav-links a {
+                margin-left: 8px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+
+            #companyResult {
+                padding: 15px;
+            }
+        }
+        /* DIVE company results layout fix */
+
+#companyResult {
+    width: 100%;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+#companyResult .company-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+    padding: 22px;
+    box-sizing: border-box;
+}
+
+#companyResult .company-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* COMPANY RESEARCH RESULT BOX */
+#companyResult {
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 24px;
+    box-sizing: border-box;
+    background: white;
+    border: 2px solid #007bff;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    text-align: left;
+}
+
+/* COMPANY CARD */
+#companyResult .company-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+}
+
+/* COMPANY NAME, LOGO AND DETAILS */
+#companyResult .company-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#companyResult .company-logo {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+#companyResult .company-heading h3 {
+    margin: 0 0 8px;
+    color: #007bff;
+    font-size: 23px;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .company-heading p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* TWO-COLUMN FINANCIAL INFORMATION */
+#companyResult .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+}
+
+#companyResult .metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 85px;
+    padding: 14px;
+    margin: 0;
+    box-sizing: border-box;
+    background: #f3f8fc;
+    border: 1px solid #d5e5f2;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .metric strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+#companyResult .metric span {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .metric {
+    min-width: 0;
+    padding: 14px;
+    box-sizing: border-box;
+    background: #f3f6fa;
+    border: 1px solid #e1e8f0;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+
+#companyResult .metric strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #555555;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#companyResult .metric span {
+    display: block;
+    color: #111827;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+/* LAST UPDATED */
+#companyResult .company-card > p {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* SMALL SCREENS */
+@media (max-width: 550px) {
+    #companyResult {
+        padding: 12px;
+    }
+
+    #companyResult .company-card {
+        padding: 8px;
+    }
+
+    #companyResult .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    #companyResult .metric {
+        padding: 10px;
+    }
+
+    #companyResult .metric span {
+        font-size: 14px;
+    }
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.comparison-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.insight-box {
+  background-color: #f4f6f8;
+  padding: 16px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+}
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">DIVE</div>
+
+       <div class="nav-links">
+  <a href="#">Home</a>
+  <a href="#companies">Companies</a>
+  <a href="#research">Research</a>
+  <a href="#comparisonContainer" id="navCompare">Compare</a>
+</div>
+         <!-- DIVE Comparison Container -->
+<div id="comparisonContainer" style="display: none; margin-top: 30px; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+  <h2>DIVE Comparison</h2>
+  <p>Select or type two companies to compare live metrics side-by-side.</p>
+  
+  <!-- Interactive Selector Form -->
+  <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+    <div>
+      <label for="companyASelect" style="font-weight: 600; display: block; margin-bottom: 5px;">First Company:</label>
+      <input type="text" id="companyASelect" placeholder="e.g. MTNN or BUAFOODS" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
+    </div>
+    
+    <div style="font-weight: bold; align-self: flex-end; padding-bottom: 10px;">VS</div>
+    
+    <div>
+      <label for="companyBSelect" style="font-weight: 600; display: block; margin-bottom: 5px;">Second Company:</label>
+      <input type="text" id="companyBSelect" placeholder="e.g. NESTLE or GUINNESS" style="padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
+    </div>
+    
+    <button id="runComparisonBtn" style="align-self: flex-end; padding: 9px 18px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">
+      Compare Live Data
+    </button>
+  </div>
+
+  <!-- Dynamic Comparison Table -->
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th id="company1Name">Select Company 1</th>
+        <th id="company2Name">Select Company 2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Share Price</td>
+        <td id="c1Price">-</td>
+        <td id="c2Price">-</td>
+      </tr>
+      <tr>
+        <td>Market Cap</td>
+        <td id="c1Cap">-</td>
+        <td id="c2Cap">-</td>
+      </tr>
+      <tr>
+        <td>52W High</td>
+        <td id="c1High">-</td>
+        <td id="c2High">-</td>
+      </tr>
+      <tr>
+        <td>52W Low</td>
+        <td id="c1Low">-</td>
+        <td id="c2Low">-</td>
+      </tr>
+      <tr>
+        <td>Volume</td>
+        <td id="c1Vol">-</td>
+        <td id="c2Vol">-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DIVE Insight Section -->
+  <div class="insight-box" style="margin-top: 20px;">
+    <h3>DIVE Insight</h3>
+    <p id="diveInsightText">
+      Enter two ticker symbols above and click "Compare Live Data" to generate live insights.
+    </p>
+  </div>
+</div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Welcome to DIVE</h1>
+        <p>Discover companies. Understand businesses. Make informed decisions.</p>
+    </header>
+
+    <section id="companies">
+        <h2>Companies</h2>
+        <p>Search and research listed companies on DIVE.</p>
+
+        <div class="company-list">
+
+            <div class="company-card">
+                <h3>MTN Nigeria</h3>
+                <p><strong>Ticker:</strong> MTNN</p>
+                <p>Telecommunications</p>
+                <button type="button" id="mtnBtn">View Company</button>
+            </div>
+
+            <div class="company-card">
+                <h3>BUA Foods</h3>
+                <p><strong>Ticker:</strong> BUAFOODS</p>
+                <p>Food Manufacturing</p>
+                <button type="button" id="buaBtn">View Company</button>
+            </div>
+            <div class="see-all-companies">
+    <button type="button" id="seeAllCompaniesBtn">
+        See All Nigerian Stock Companies
+    </button>
+</div>
+<div id="allCompaniesSection" style="display: none; margin-top: 25px;">
+    <h2>All Nigerian Stock Companies</h2>
+    <p>Discover and search companies listed on the Nigerian stock market.</p>
+
+    <input
+        type="text"
+        id="companyDirectorySearch"
+        placeholder="Search company name or ticker..."
+        style="width: 100%; padding: 12px; margin-bottom: 15px;"
+    >
+
+    <p id="companyDirectoryStatus">Loading companies...</p>
+
+    <div id="companyDirectoryList"></div>
+</div>
+
+        </div>
+    </section>
+
+    <section id="research">
+        <h2>Research a Company</h2>
+
+        <input
+            type="text"
+            id="companyInput"
+            placeholder="Enter company name or ticker..."
+        >
+
+        <button type="button" id="searchBtn">Search</button>
+
+        <div id="companyResult" aria-live="polite">
+            <p>Search for a company to see its available information.</p>
+        </div>
+    </section>
+
+    <footer>
+    <p>DIVE — Company Research</p>
+    <p>Market information is provided by NGN Market API.</p>
+    <p>Market prices can change. Always verify information before investing.</p>
+
+    <p>
+        Customer Support:
+        <a href="mailto:pulisicsmartgt@gmail.com">pulisicsmartgt@gmail.com</a>
+    </p>
+
+    <p>
+        <a href="https://whatsapp.com/channel/0029VbE7MmbB4hdNIhD8L03T" target="_blank" rel="noopener">
+            Join our WhatsApp Channel
+        </a>
+    </p>
+</footer>
+    
+    <script>
+        const companyInput = document.getElementById("companyInput");
+        const companyResult = document.getElementById("companyResult");
+        const searchBtn = document.getElementById("searchBtn")
+                
+
+        async function searchCompany(companyName) {
+            const search = companyName.trim();
+
+            if (!search) {
+                companyResult.innerHTML =
+                    "<p>Please enter a company name or ticker.</p>";
+                return;
+            }
+
+            companyInput.value = search;
+
+            companyResult.innerHTML =
+                "<p>Searching for company information...</p>";
+
+
+            try {
+                const response = await fetch(
+                    "https://dive-backend-4l7e.onrender.com/companies?search=" +
+                    encodeURIComponent(search)
+                );
+
+                const result = await response.json();
+
+                console.log("HTTP status:", response.status);
+                console.log("API result:", result);if (!response.ok || !result.success) {
+                    throw new Error(
+                        result.error || "Unable to retrieve company data."
+                    );
+                }
+
+                const companies = result.data?.data;
+
+                if (!companies || companies.length === 0) {
+                    companyResult.innerHTML =
+                        "<p>No matching company found. Try another name or ticker.</p>";
+                    return;
+                }
+
+                companyResult.innerHTML =
+                    "<h2>Company Search Results</h2>" +
+                    (await Promise.all(companies.map(async function (company) {
+                        function money(value) {
+                            if (value == null || value === "") {
+                                return "Not available";
+                            }
+
+                            return "₦" + Number(value).toLocaleString(
+                                "en-NG",
+                                { maximumFractionDigits: 2 }
+                            );
+                        }
+
+                        function number(value) {
+                            if (value == null || value === "") {
+                                return "Not available";
+                            }
+
+                            return Number(value).toLocaleString("en-NG");
+                        }
+
+                        function percent(value) {
+                            if (value == null || value === "") {
+                                return "Not available";
+                            }
+
+                            return Number(value).toFixed(2) + "%";
+                        }
+
+                         const updated= company.last_updated
+                            ? new Date(company.last_updated).toLocaleString()
+                            : "Not available";
+
+                        return `
+                            <div class="company-card">
+
+                                <div class="company-heading">
+                                    ${
+                                        company.logo_url
+                                            ? `<img src="${company.logo_url}" alt="" class="company-logo">`
+                                            : ""
+                                    }
+
+                                    <div>
+                                        <h3>${company.name || "Unknown company"}</h3>
+                                        <p>
+                                            <strong>Ticker:</strong>
+                                            ${company.symbol || "Not available"}
+                                        </p>
+                                        <p>
+                                            <strong>Sector:</strong>
+                                            ${company.sector || "Not available"}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="metrics">
+
+                                    <div class="metric">
+                                        <strong>Share Price</strong>
+                                        <span>${money(company.price)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Previous Close</strong>
+                                        <span>${money(company.prev_close)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Daily Change</strong>
+                                        <span>${money(company.price_change)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Daily Change %</strong>
+                                        <span>${percent(company.price_change_percent)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Trading Volume</strong>
+                                        <span>${number(company.volume)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Market Capitalisation</strong>
+                                        <span>${money(company.market_cap)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>Shares Outstanding</strong>
+                                        <span>${number(company.shares_outstanding)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>52-Week High</strong>
+                                        <span>${money(company.high_52wk)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>52-Week Low</strong>
+                                        <span>${money(company.low_52wk)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>7-Day Change</strong>
+                                        <span>${percent(company.change_7d_percent)}</span>
+                                    </div>
+
+                                    <div class="metric">
+                                        <strong>52-Week Change</strong>
+                                        <span>${percent(company.change_52w_percent)}</span>
+                                    </div>
+
+                                </div>
+
+                                <p><strong>Last Updated:</strong> ${updated}</p>
+
+                            </div>
+                        `;
+                    }))).join("") +
+                    "<p class='source-note'>Source: NGN Market API. " +
+                    "Values and update times are supplied by the data provider.</p>";
+
+                companyResult.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+               
+            } catch (error) {
+                console.error("DIVE company search error:", error);
+
+                companyResult.innerHTML =
+                    "<h2>Unable to load company data</h2>" +
+                    "<p>" + error.message + "</p>" +
+                    "<p>Make sure your DIVE backend is running.</p>";
+            }
+        }
+
+        searchBtn.addEventListener("click", function () {
+            searchCompany(companyInput.value);
+        });
+
+        companyInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                searchCompany(companyInput.value);
+            }
+        });
+
+        mtnBtn.addEventListener("click", function () {
+            searchCompany("MTNN");
+        });
+
+        buaBtn.addEventListener("click", function () {
+            searchCompany("BUAFOODS");
+        });
+        function renderComparison(companyA, companyB) {
+    const dailyA = Number(companyA.dailyChangePercent ?? companyA.price_change_percent);
+    const dailyB = Number(companyB.dailyChangePercent ?? companyB.price_change_percent);
+
+    const weekA = Number(companyA.weekChangePercent);
+    const weekB = Number(companyB.weekChangePercent);
+
+    const yearA = Number(companyA.yearChangePercent);
+    const yearB = Number(companyB.yearChangePercent);
+
+    // Use the same field names returned by getCompany()
+    const priceA = Number(companyA.sharePrice);
+    const priceB = Number(companyB.sharePrice);
+
+    const marketCapA = Number(companyA.marketCap);
+    const marketCapB = Number(companyB.marketCap);
+
+    const volumeA = Number(companyA.volume);
+    const volumeB = Number(companyB.volume);
+
+    const highA = Number(companyA.high52);
+    const highB = Number(companyB.high52);
+
+    const lowA = Number(companyA.low52);
+    const lowB = Number(companyB.low52);
+
+    const valid = value => Number.isFinite(value);
+    const pct = value => `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
+    const naira = value => "₦" + value.toLocaleString("en-NG", {
+        maximumFractionDigits: 2
+    });
+
+    const nameA = companyA.name || "Company A";
+    const nameB = companyB.name || "Company B";
+    document.getElementById("company1Name").innerText = nameA;
+    document.getElementById("company2Name").innerText = nameB;
+
+    const displayNumber = value =>
+        Number.isFinite(value)
+            ? value.toLocaleString("en-NG", { maximumFractionDigits: 2 })
+            : "-";
+
+    const displayNaira = value =>
+        Number.isFinite(value)
+            ? "₦" + displayNumber(value)
+            : "-";
+
+    document.getElementById("c1Price").innerText = displayNaira(priceA);
+    document.getElementById("c2Price").innerText = displayNaira(priceB);
+
+    document.getElementById("c1Cap").innerText = displayNaira(marketCapA);
+    document.getElementById("c2Cap").innerText = displayNaira(marketCapB);
+
+    document.getElementById("c1High").innerText = displayNaira(highA);
+    document.getElementById("c2High").innerText = displayNaira(highB);
+
+    document.getElementById("c1Low").innerText = displayNaira(lowA);
+    document.getElementById("c2Low").innerText = displayNaira(lowB);
+
+    document.getElementById("c1Vol").innerText = displayNumber(volumeA);
+    document.getElementById("c2Vol").innerText = displayNumber(volumeB);
+
+    let insight = "";
+
+    // Daily performance
+    if (valid(dailyA) && valid(dailyB)) {
+        if (dailyA > dailyB) {
+            insight += `DAILY PERFORMANCE: ${nameA} is performing better today, with a change of ${pct(dailyA)} compared with ${pct(dailyB)} for ${nameB}. `;
+        } else if (dailyB > dailyA) {
+            insight += `DAILY PERFORMANCE: ${nameB} is performing better today, with a change of ${pct(dailyB)} compared with ${pct(dailyA)} for ${nameA}. `;
+        } else {
+            insight += `DAILY PERFORMANCE: Both companies have the same daily percentage change of ${pct(dailyA)}. `;
+        }
+    }
+
+    // Weekly performance
+    if (valid(weekA) && valid(weekB)) {
+        if (weekA > weekB) {
+            insight += `7-DAY PERFORMANCE: ${nameA} has performed better over the past 7 days (${pct(weekA)} versus ${pct(weekB)}). `;
+        } else if (weekB > weekA) {
+            insight += `7-DAY PERFORMANCE: ${nameB} has performed better over the past 7 days (${pct(weekB)} versus ${pct(weekA)}). `;
+        } else {
+            insight += `7-DAY PERFORMANCE: Both companies have the same 7-day change of ${pct(weekA)}. `;
+        }
+    }
+
+    // 52-week performance
+    if (valid(yearA) && valid(yearB)) {
+        if (yearA > yearB) {
+            insight += `52-WEEK PERFORMANCE: ${nameA} has delivered the stronger price performance over the past 52 weeks (${pct(yearA)} versus ${pct(yearB)}). `;
+        } else if (yearB > yearA) {
+            insight += `52-WEEK PERFORMANCE: ${nameB} has delivered the stronger price performance over the past 52 weeks (${pct(yearB)} versus ${pct(yearA)}). `;
+        } else {
+            insight += `52-WEEK PERFORMANCE: Both companies have the same 52-week change of ${pct(yearA)}. `;
+        }
+    }
+
+    // Share price comparison
+    if (valid(priceA) && valid(priceB)) {
+        insight += `SHARE PRICE: ${nameA} trades at ${naira(priceA)} per share, while ${nameB} trades at ${naira(priceB)}. A higher share price alone does not mean a company is performing better. `;
+    }
+
+    // Trading activity
+    if (valid(volumeA) && valid(volumeB)) {
+        insight += `TRADING ACTIVITY: ${nameA} recorded ${volumeA.toLocaleString("en-NG")} shares traded, while ${nameB} recorded ${volumeB.toLocaleString("en-NG")}. Trading volume measures shares traded, not the number of individual buyers. `;
+    }
+
+    // 52-week price range
+    if (valid(highA) && valid(lowA) && valid(highB) && valid(lowB)) {
+        insight += `52-WEEK PRICE RANGE: ${nameA} ranged from ${naira(lowA)} to ${naira(highA)}. ${nameB} ranged from ${naira(lowB)} to ${naira(highB)}. These are 52-WEEK ranges, not 52-day ranges. `;
+    }
+
+    if (!insight) {
+        insight = "DIVE needs valid daily, weekly, or 52-week percentage-change data to compare performance. Check whether the selected companies returned these figures.";
+    }
+document.getElementById("diveInsightText").innerText = insight;
+    document.getElementById("comparisonContainer").style.display = "block";
+}
+const compareButton = document.getElementById("runComparisonBtn");
+
+if (compareButton) {
+    compareButton.addEventListener("click", async function () {
+        const tickerA = document.getElementById("companyASelect").value.trim();
+        const tickerB = document.getElementById("companyBSelect").value.trim();
+
+        if (!tickerA || !tickerB) {
+            alert("Enter both company ticker symbols.");
+            return;
+        }
+
+        compareButton.disabled = true;
+        compareButton.innerText = "Loading...";
+
+        try {
+            async function getCompany(ticker) {
+                const response = await fetch(
+                    "https://dive-backend-4l7e.onrender.com/companies?search=" +
+                    encodeURIComponent(ticker)
+                );
+
+                if (!response.ok) {
+                    throw new Error("Could not load " + ticker);
+                }
+
+               const result = await response.json();
+
+const list = Array.isArray(result?.data?.data)
+    ? result.data.data
+    : Array.isArray(result?.data)
+        ? result.data
+        : Array.isArray(result?.companies)
+            ? result.companies
+            : Array.isArray(result?.results)
+                ? result.results
+                : Array.isArray(result)
+                    ? result
+                    : [];
+
+const company = list.find(item =>
+    String(item.symbol ?? item.ticker ?? item.code ?? "")
+        .toUpperCase() === ticker.toUpperCase()
+) || (list.length === 1 ? list[0] : null);
+
+if (!company) {
+    throw new Error("Company not found: " + ticker);
+}
+return {
+    name: company.name ?? company.companyName ?? ticker,
+    sharePrice: company.price ?? company.sharePrice ?? "-",
+    marketCap: company.market_cap ?? company.marketCap ?? "-",
+    high52: company.high_52wk ?? company.high52 ?? "-",
+    low52: company.low_52wk ?? company.low52 ?? "-",
+    volume: company.volume ?? "-",
+    dailyChangePercent: company.price_change_percent ?? 0,
+    weekChangePercent: company.change_7d_percent ?? 0,
+    yearChangePercent: company.change_52w_percent ?? 0
+};
+            }
+
+            const [companyA, companyB] = await Promise.all([
+                getCompany(tickerA),
+                getCompany(tickerB)
+            ]);
+
+            renderComparison(companyA, companyB);
+        } catch (error) {
+            alert("Comparison failed: " + error.message);
+        } finally {
+            compareButton.disabled = false;
+            compareButton.innerText = "Compare Live Data";
+        }
+    });
+}
+
+const compareLink = document.getElementById("navCompare");
+
+if (compareLink) {
+    compareLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        const compBox = document.getElementById("comparisonContainer");
+        compBox.style.display = "block";
+        compBox.scrollIntoView({ behavior: "smooth" });
+    });
+}
+// DIVE: ALL NIGERIAN STOCK COMPANIES
+
+const seeAllCompaniesBtn = document.getElementById("seeAllCompaniesBtn");
+const allCompaniesSection = document.getElementById("allCompaniesSection");
+const companyDirectorySearch = document.getElementById("companyDirectorySearch");
+const companyDirectoryStatus = document.getElementById("companyDirectoryStatus");
+const companyDirectoryList = document.getElementById("companyDirectoryList");
+
+let allListedCompanies = [];
+
+function renderCompanyDirectory(companies) {
+    companyDirectoryList.innerHTML = "";
+
+    if (companies.length === 0) {
+        companyDirectoryStatus.textContent = "No companies found. Try another search.";
+        return;
+    }
+
+    companyDirectoryStatus.textContent = "Showing " + companies.length + " companies";
+
+    companies.forEach(function(company) {
+        const card = document.createElement("div");
+        card.className = "company-card";
+
+        const name = document.createElement("h3");
+        name.textContent = company.name || "Company name unavailable";
+
+        const ticker = document.createElement("p");
+        ticker.textContent = "Ticker: " + (company.symbol || "-");
+
+        const sector = document.createElement("p");
+        sector.textContent = "Sector: " + (company.sector || "Not available");
+        const selectButton = document.createElement("button");
+selectButton.type = "button";
+selectButton.textContent = "Research this company";
+
+selectButton.addEventListener("click", function() {
+    const companyA = document.getElementById("companyASelect");
+    const companyB = document.getElementById("companyBSelect");
+
+    if (!companyA || !companyB) {
+        alert("DIVE comparison fields could not be found.");
+        return;
+    }
+
+    if (!companyA.value.trim()) {
+        companyA.value = company.symbol;
+        companyA.focus();
+    } else if (!companyB.value.trim()) {
+        companyB.value = company.symbol;
+        companyB.focus();
+    } else {
+        const replaceFirst = confirm(
+            "Both fields are filled. Press OK to replace the first company, or Cancel to replace the second."
+        );
+
+        if (replaceFirst) {
+            companyA.value = company.symbol;
+            companyA.focus();
+        } else {
+            companyB.value = company.symbol;
+            companyB.focus();
+        }
+    }
+
+    document.getElementById("runComparisonBtn")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+        const price = document.createElement("p");
+        price.textContent = "Share Price: " +
+            (company.price != null ? "₦" + Number(company.price).toLocaleString() : "Not available");
+
+        card.appendChild(name);
+card.appendChild(ticker);
+card.appendChild(sector);
+card.appendChild(price);
+card.appendChild(selectButton);
+        companyDirectoryList.appendChild(card);
+    });
+}
+
+async function loadAllCompanies() {
+    companyDirectoryStatus.textContent = "Loading companies...";
+
+    try {
+        const response = await fetch(
+            "https://dive-backend-4l7e.onrender.com/all-companies"
+        );
+
+        if (!response.ok) {
+            throw new Error("Backend returned an error");
+        }
+
+        const result = await response.json();
+
+        const companies = result &&
+            result.data &&
+            Array.isArray(result.data.data)
+                ? result.data.data
+                : [];
+
+        allListedCompanies = companies;
+        renderCompanyDirectory(allListedCompanies);
+
+    } catch (error) {
+        companyDirectoryStatus.textContent =
+            "Unable to load companies. Please try again later.";
+        console.error("DIVE company directory error:", error);
+    }
+}
+
+if (seeAllCompaniesBtn) {
+    seeAllCompaniesBtn.addEventListener("click", function() {
+        const isHidden = allCompaniesSection.style.display === "none";
+
+        allCompaniesSection.style.display = isHidden ? "block" : "none";
+
+        if (isHidden && allListedCompanies.length === 0) {
+            loadAllCompanies();
+        }
+
+        if (isHidden) {
+            allCompaniesSection.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+}
+
+if (companyDirectorySearch) {
+    companyDirectorySearch.addEventListener("input", function() {
+        const searchTerm = companyDirectorySearch.value.toLowerCase().trim();
+
+        const filteredCompanies = allListedCompanies.filter(function(company) {
+            return (
+                String(company.name || "").toLowerCase().includes(searchTerm) ||
+                String(company.symbol || "").toLowerCase().includes(searchTerm) ||
+                String(company.sector || "").toLowerCase().includes(searchTerm)
+            );
+        });
+
+        renderCompanyDirectory(filteredCompanies);
+    });
+}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase-config.js"></script>
+
+<script src="supabase-client.js"></script>
+
+</body>
+</html>
