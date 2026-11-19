@@ -607,6 +607,52 @@
             Join our WhatsApp Channel
         </a>
     </p>
+    <section id="dive-account">
+    <h2>Your DIVE Account</h2>
+    <p>Create an account to access additional DIVE features.</p>
+
+    <button type="button" id="show-signup">
+        Create Account
+    </button>
+
+    <button type="button" id="show-login">
+        Log In
+    </button>
+
+    <div id="signup-form" hidden>
+        <h3>Create Your Account</h3>
+
+        <form id="dive-signup-form">
+            <input type="text" id="signup-username"
+                placeholder="Username" required>
+
+            <input type="email" id="signup-email"
+                placeholder="Email address" required>
+
+            <input type="password" id="signup-password"
+                placeholder="Password (minimum 8 characters)"
+                minlength="8" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <div id="login-form" hidden>
+        <h3>Welcome Back</h3>
+
+        <form id="dive-login-form">
+            <input type="email" id="login-email"
+                placeholder="Email address" required>
+
+            <input type="password" id="login-password"
+                placeholder="Password" required>
+
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+
+    <p id="account-message"></p>
+</section>
 </footer>
     
     <script>
