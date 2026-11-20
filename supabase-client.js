@@ -112,6 +112,9 @@ const diveLogoutButton = document.getElementById("dive-logout-button");
 const diveLogoutArea = document.getElementById("dive-logout-area");
 
 function updateDIVEAccountUI(session) {
+    const dashboard = document.getElementById("dive-dashboard");
+    const dashboardWelcome = document.getElementById("dashboard-welcome");
+
     if (session && session.user) {
         const username = session.user.user_metadata.username || "Member";
 
@@ -121,12 +124,17 @@ function updateDIVEAccountUI(session) {
         diveLoggedInBar.hidden = false;
         diveLogoutArea.hidden = false;
 
+        dashboard.hidden = false;
+        dashboardWelcome.textContent = "Welcome to your personal DIVE space, " + username + "!";
+
         accountModal.hidden = true;
         accountModal.style.display = "none";
+
     } else {
         diveAccountButtons.hidden = false;
         diveLoggedInBar.hidden = true;
         diveLogoutArea.hidden = true;
+        dashboard.hidden = true;
     }
 }
 
