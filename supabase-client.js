@@ -103,3 +103,50 @@ document.getElementById("dive-login-form")
 
     accountMessage.textContent = "Welcome back to DIVE!";
 });
+// DIVE member session management
+
+const diveAccountButtons = document.getElementById("dive-account-buttons");
+const diveLoggedInBar = document.getElementById("dive-logged-in-bar");
+const diveUserGreeting = document.getElementById("dive-user-greeting");
+const diveLogoutButton = document.getElementById("dive-logout-button");
+
+function updateDIVEAccountUI(session) {
+    if (session && session.user) {
+        const username = session.user.user_metadata.username || "Member";
+
+        diveUserGreeting.textContent = "Welcome, " + username;
+
+        diveAccountButtons.hidden = true;
+        diveLoggedInBar.hidden = false;
+
+        accountModal.hidden = true;
+        accountModal.style.display = "none";
+    } else {
+        diveAccountButtons.hidden = false;
+        diveLoggedInBar.hidden = true;
+    }
+}
+
+// Check whether a member is already logged in
+window.diveSupabase.auth.getSession().then(({ data, error }) => {
+    if (error) {
+        console.error("Session check failed:", error.message);
+        return;
+    }
+
+    updateDIVEAccountUI(data.session);
+});
+
+// Keep the interface updated when login status changes
+window.diveSupabase.auth.onAuthStateChange((event, session) => {
+    updateDIVEAccountUI(session);
+});
+
+// Log out
+diveLogoutButton.addEventListener("click", async function () {
+    const { error } = await window.diveSupabase.auth.signOut();
+
+    if (error) {
+        alert(error.message);
+    }
+});
