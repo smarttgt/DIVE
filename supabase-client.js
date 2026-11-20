@@ -109,6 +109,7 @@ const diveAccountButtons = document.getElementById("dive-account-buttons");
 const diveLoggedInBar = document.getElementById("dive-logged-in-bar");
 const diveUserGreeting = document.getElementById("dive-user-greeting");
 const diveLogoutButton = document.getElementById("dive-logout-button");
+const diveLogoutArea = document.getElementById("dive-logout-area");
 
 function updateDIVEAccountUI(session) {
     if (session && session.user) {
@@ -118,12 +119,14 @@ function updateDIVEAccountUI(session) {
 
         diveAccountButtons.hidden = true;
         diveLoggedInBar.hidden = false;
+        diveLogoutArea.hidden = false;
 
         accountModal.hidden = true;
         accountModal.style.display = "none";
     } else {
         diveAccountButtons.hidden = false;
         diveLoggedInBar.hidden = true;
+        diveLogoutArea.hidden = true;
     }
 }
 
