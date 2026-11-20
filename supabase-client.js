@@ -4,10 +4,13 @@ window.diveSupabase = window.supabase.createClient(
 );
 
 console.log("DIVE Supabase connection initialized");
-// DIVE account form controls
+// DIVE account pop-up controls
 
 const signupButton = document.getElementById("show-signup");
 const loginButton = document.getElementById("show-login");
+
+const accountModal = document.getElementById("dive-account-modal");
+const closeModalButton = document.getElementById("close-account-modal");
 
 const signupSection = document.getElementById("signup-form");
 const loginSection = document.getElementById("login-form");
@@ -15,15 +18,24 @@ const loginSection = document.getElementById("login-form");
 const accountMessage = document.getElementById("account-message");
 
 signupButton.addEventListener("click", function () {
+    accountModal.hidden = false;
+    accountModal.style.display = "flex";
     signupSection.hidden = false;
     loginSection.hidden = true;
     accountMessage.textContent = "";
 });
 
 loginButton.addEventListener("click", function () {
+    accountModal.hidden = false;
+    accountModal.style.display = "flex";
     loginSection.hidden = false;
     signupSection.hidden = true;
     accountMessage.textContent = "";
+});
+
+closeModalButton.addEventListener("click", function () {
+    accountModal.hidden = true;
+    accountModal.style.display = "none";
 });
 
 // DIVE registration
